@@ -1,24 +1,35 @@
 import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
-
+import { connectWebSocket, sendMessage, updateConnectButtonState } from './chat';
 function App() {
+  const [username, setUsername] = useState('');
+  const [message, setMessage] = useState('');
+  updateConnectButtonState();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="chat-box" id='chatbox'>
     </div>
+    <div className="messageInput">
+      <textarea 
+        value={message}
+        id={'message-input'}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Type your message here..."
+      />
+      <button onClick={sendMessage}>Send</button>
+    </div>
+    <div className="username-input">
+      <input 
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Enter username"
+      />
+      <button id= 'connectButton'onClick={() => connectWebSocket(username)}>Connect</button>
+
+    </div>
+  </div>
   );
 }
 
