@@ -32,11 +32,7 @@ function App() {
             updateOnlineUsersList(data.users); // Implement this function
         }  
           else {
-              // Handle regular chat messages
-              const chatbox = document.getElementById('chatbox');
-              const messageElement = document.createElement('div');
-              messageElement.textContent = `${data.sender}: ${data.message}`;
-              chatbox.appendChild(messageElement);
+              addMessageToChatbox(data.sender, data.message)
           }
       };
       
@@ -50,6 +46,28 @@ function App() {
             setMessage('');
         }
     };
+
+    const addMessageToChatbox = (sender, message) => {
+        const chatbox = document.getElementById('chatbox');
+        const messageContainer = document.createElement('div');
+        messageContainer.className = 'message-container';
+        if (sender === username) {
+            messageContainer.classList.add('own-message');
+        }
+    
+        const senderElement = document.createElement('div');
+        senderElement.className = 'sender-name';
+        senderElement.textContent = sender;
+    
+        const messageElement = document.createElement('div');
+        messageElement.className = 'message-bubble';
+        messageElement.textContent = message;
+    
+        messageContainer.appendChild(senderElement);
+        messageContainer.appendChild(messageElement);
+        chatbox.appendChild(messageContainer);
+    };
+    
 
     const handleDisconnect = () => {
         if (webSocket) {
